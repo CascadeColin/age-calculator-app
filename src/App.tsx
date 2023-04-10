@@ -1,30 +1,43 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import "./App.css";
 import { getAge, getBirthday } from "./assets/types";
-import { isDateValid, isDateInTheFuture, currentYear } from "./assets/time";
+import { isDateValid, isDateInTheFuture, leapYearCalculator, calculateAge, currentYear } from "./assets/time";
 
-const x = "2023-04-08";
-console.log("isValidDate: ",isDateValid(x));
-console.log("isDateInThePast: ",isDateInTheFuture(x))
-console.log(currentYear);
+
+/* NOTE: x equivalent to dateString, rest equivalent to destructured birthday state */
+// const year = "2007"
+// const month = "04"
+// const day = "10"
+// const x = "2007-04-10";
+// console.log('leapYearFinder: ', leapYearCalculator(year))
+// console.log('calculateAge: ', calculateAge(x))
 
 export default function App() {
   const [birthday, setBirthday] = useState(getBirthday());
   const [age, setAge] = useState(getAge());
   const [error, setError] = useState("");
 
+  // formats birthday to "YYYY-MM-DD" so dayjs can use it
+  const dateString = `${birthday.year}-${birthday.month}-${birthday.day}`;
+
   function handleInputChange(e: ChangeEvent<HTMLInputElement>): void {
-    const unitOfTime = e.target.id
-    const timeValue = e.target.value
-    console.log("id: ", unitOfTime);
-    console.log("value: ", timeValue);
-    // set state for birthday
+    const unitOfTime = e.target.id;
+    let timeValue = e.target.value;
+    // converts "1" into "01" for month/day - required by dayjs to use strict checking (YYYY-MM-DD format)
+    if (timeValue.length === 1 && unitOfTime !== "year") {
+      timeValue = `0${timeValue}`;
+      console.log(timeValue);
+    }
+    setBirthday({ ...birthday, [unitOfTime]: timeValue });
   }
 
   function handleFormSubmit(e: FormEvent<HTMLButtonElement>): void {
-    console.log("button works")
+    // see time.ts for pseudocode
+    const test = calculateAge(dateString)
+    console.log(test)
+    const days = ''
     /* NOTE: dates formatted as: YYYY-MM-DD */
-    // format birthday and Date.now() to timestamp
+    // format birthday and Date.now()
     // compare to get age as timestamp
     // format age timestamp to years, months, days
     // setAge() to formatted age
