@@ -11,8 +11,8 @@ The designs were created to the following widths:
 
 ### Primary
 
-- Purple: hsl(259, 100%, 65%)
-- Light red: hsl(0, 100%, 67%)
+- Purple: hsl(259, 100%, 65%)  // button, age font
+- Light red: hsl(0, 100%, 67%)  // background
 
 ### Neutral
 

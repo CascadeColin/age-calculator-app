@@ -1,3 +1,71 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 20px 20px 100px 20px;
+  margin: 200px 20px 20px 20px;
+}
+
+.form {
+  display: flex;
+  margin: 30px 30px 0 30px;
+  border-bottom: hsl(0, 1%, 44%, 0.3) solid 1px;
+  justify-content: space-between;
+}
+
+.formCard {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 25%;
+  padding: 20px 0px 50px 0px;
+}
+
+.formLabel {
+  color: hsl(0, 1%, 44%);
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 12px;
+}
+
+.formInput {
+  margin-top: 3px;
+  border: hsl(0, 1%, 44%, 0.3) solid 1px;
+  border-radius: 5px;
+  width: 100%;
+  height: 40px;
+  text-indent: 10px;
+  font-weight: 700;
+}
+
+.submitBtn {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: hsl(259, 100%, 65%);
+  margin-top: -25px;
+}
+
+.submitBtn img {
+  margin-top: 5px;
+}
+
+.ageContainer {
+  margin: 30px;
+}
+
+.ageContainer > p {
+  font-size: 45px;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.ageContainer > p > span {
+  color: hsl(259, 100%, 65%);
+}
+
 .attribution {
   font-size: 11px;
   text-align: center;
