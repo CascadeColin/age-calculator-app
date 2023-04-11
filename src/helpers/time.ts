@@ -48,6 +48,8 @@ export function calculateAge(date: string): string {
   // gets the # of days in a particular month
   console.log(`days in ${nowFullDate}: `, dayjs(nowFullDate).daysInMonth());
   console.log(`diff in years, months, and days: `,year, month, day);
+
+  // take remainderMonths and run daysInMonth() on those months to get the # of days in those months.  Then, compare that to how many days are unaccounted for when subtracting years and months to get the "days" value for display
 }
 
 // formats user supplied age to years, months, and days for display in client

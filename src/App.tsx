@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import "./App.css";
-import { getAge, getBirthday } from "./assets/types";
-import { isDateValid, isDateInTheFuture, leapYearCalculator, calculateAge, currentYear } from "./assets/time";
+import { getAge, getBirthday } from "./helpers/types";
+import { isDateValid, isDateInTheFuture, calculateAge, currentYear } from "./helpers/time";
 
 
 /* NOTE: x equivalent to dateString, rest equivalent to destructured birthday state */
@@ -9,7 +9,7 @@ import { isDateValid, isDateInTheFuture, leapYearCalculator, calculateAge, curre
 // const month = "04"
 // const day = "10"
 // const x = "2007-04-10";
-// console.log('leapYearFinder: ', leapYearCalculator(year))
+
 // console.log('calculateAge: ', calculateAge(x))
 
 export default function App() {
@@ -21,12 +21,11 @@ export default function App() {
   const dateString = `${birthday.year}-${birthday.month}-${birthday.day}`;
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>): void {
-    const unitOfTime = e.target.id;
-    let timeValue = e.target.value;
+    const unitOfTime: string = e.target.id;
+    let timeValue: string = e.target.value;
     // converts "1" into "01" for month/day - required by dayjs to use strict checking (YYYY-MM-DD format)
     if (timeValue.length === 1 && unitOfTime !== "year") {
       timeValue = `0${timeValue}`;
-      console.log(timeValue);
     }
     setBirthday({ ...birthday, [unitOfTime]: timeValue });
   }
