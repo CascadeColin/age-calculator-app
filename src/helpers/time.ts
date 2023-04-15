@@ -1,5 +1,4 @@
 import { Age } from "./types";
-
 // makes working with dates easier
 import * as dayjs from "dayjs";
 // dayjs plugins
@@ -20,61 +19,101 @@ export function isDateInTheFuture(date: string): boolean {
 }
 
 // takes in birthday and returns "age" based on how far in the past that date is
-export function calculateAge(date: string): string {
+export function calculateAge(date: string): Age {
   const year = dayjs().diff(dayjs(date), "year");
   const month = dayjs().diff(dayjs(date), "month");
   const day = dayjs().diff(dayjs(date), "day");
-  
+
   /* How do I accurately get the number of days, factoring in months being 28,29,30,or 31 days? */
-  const remainderMonths = month % year;
+  // where months = total number of months from inputted date to now
+  const remainderMonths = month % 12;
   console.log("remainder months: ", remainderMonths);
 
-  // breaking down the data needed to analyze now
-  const nowFullDate = dayjs().format("YYYY-MM-DD");
-  const nowYear = dayjs().format("YYYY");
-  const nowMonth = dayjs().format("MM");
-  const nowDay = dayjs().format("DD");
-  console.log("nowFull: ", nowFullDate);
-  console.log(`nowYear, nowMonth, nowDay: `, nowYear, nowMonth, nowDay)
-
-  // breaking down the data needed to analyze birthday
+  const currentFullDate = dayjs().format("YYYY-MM-DD");
   const birthdayFullDate = dayjs(date, "YYYY-MM-DD", true).format("YYYY-MM-DD");
-  const birthdayYear = dayjs(date, "YYYY-MM-DD", true).format("YYYY");
-  const birthdayMonth = dayjs(date, "YYYY-MM-DD", true).format("MM");
-  const birthdayDay = dayjs(date, "YYYY-MM-DD", true).format("DD");
-  console.log("birthdayFull: ", birthdayFullDate);
-  console.log(`birthdayYear, birthdayMonth, birthdayDay: `, birthdayYear,birthdayMonth, birthdayDay)
-  
-  // gets the # of days in a particular month
-  console.log(`days in ${nowFullDate}: `, dayjs(nowFullDate).daysInMonth());
-  console.log(`diff in years, months, and days: `,year, month, day);
+  convertRemainderMonthsToDays(
+    birthdayFullDate,
+    currentFullDate,
+    remainderMonths
+  );
 
-  // take remainderMonths and run daysInMonth() on those months to get the # of days in those months.  Then, compare that to how many days are unaccounted for when subtracting years and months to get the "days" value for display
+  console.log(`diff in years, months, and days: `, year, month, day);
+  console.log(" ");
+
+  return {
+    years: year.toString(),
+    months: remainderMonths.toString(),
+    days: "-1",
+  };
 }
 
-// formats user supplied age to years, months, and days for display in client
-export function formatAge(date: string): Age {}
-
-// takes it birthday.year state and calculates the number of leap years between birthday and now
-// NOTE: Don't think this is needed.  diff() factors in leap years already
-// export function leapYearCalculator(year: string): number {
-//   let currentYear = Number(dayjs().format("YYYY"));
-//   const endYear = Number(year);
-//   let numLeapYears: number = 0;
-
-//   while (endYear < currentYear) {
-//     // returns true if currentYear is a leap year
-//     const bool = dayjs(currentYear.toString()).isLeapYear();
-//     if (bool === true) {
-//       numLeapYears += 1;
-//     }
-//     currentYear -= 1;
-//   }
-//   return numLeapYears;
-// }
-
 // evaluates the number of days in each remainder month to get an accurate days count
-export function convertRemainderMonthsToDays(months: string): string {}
+export function convertRemainderMonthsToDays(
+  birthday: string,
+  current: string,
+  remainderMonths: string
+) {
+  const birthdayYear = dayjs(birthday, "YYYY-MM-DD", true).format("YYYY");
+  const birthdayMonth = dayjs(birthday, "YYYY-MM-DD", true).format("MM");
+  const birthdayDay = dayjs(birthday, "YYYY-MM-DD", true).format("DD");
+  console.log("birthdayFullDate: ", birthday);
+  console.log(
+    `birthdayYear, birthdayMonth, birthdayDay: `,
+    birthdayYear,
+    birthdayMonth,
+    birthdayDay
+  );
+
+  const currentYear = dayjs(current).format("YYYY");
+  const currentMonth = dayjs(current).format("MM");
+  const currentDay = dayjs(current).format("DD");
+  console.log("currentFullDate: ", current);
+  console.log(
+    `currentYear, currentMonth, currentDay: `,
+    currentYear,
+    currentMonth,
+    currentDay
+  );
+
+  // take remainderMonths and run daysInMonth() on those months to get the # of days in those months.  Then, compare that to how many days are unaccounted for when subtracting years and months to get the "days" value for display
+  /* EXAMPLE */
+  // gets the # of days in a particular month
+  console.log(`days in ${current}: `, dayjs(current).daysInMonth());
+
+  // use remainderMonths to create an array of months?
+  console.log(remainderMonths);
+
+  // get remainder days
+  // FIXME: what if they are equal?
+
+  if (birthdayDay > currentDay && birthdayMonth < currentMonth) {
+    // example: 2023-04-15 (current) vs. 2011-03-18 (birthday)
+    // answer: 28 days
+  } else if (birthdayDay > currentDay && birthdayMonth > currentMonth) {
+    // example: 2023-04-15 (current) vs. 2011-06-18 (birthday)
+    // remainderMonths = 9
+    // count up months -> 7, 8, 9, 10, 11, 12, 1, 2, 3 -> 9 months
+    // dayjs(7).daysInMonth() = ... -> run this for each month
+    // 9 months = X number of days -> dynamic based on months in question
+    // add the extra days in because birthdayDay > currentDay?
+  } else if (birthdayDay < currentDay && birthdayMonth < currentMonth) {
+    // example: 2023-04-15 (current) vs. 2011-03-10 (birthday)
+    // remainderMonths = 1
+    // count down months -> 4, 3
+    // run daysInMonth() to detect days in those months
+    // subtract extra days because birthdayDay < currentDay
+  } else if (birthdayDay < currentDay && birthdayMonth > currentMonth) {
+    // example: 2023-04-15 (current) vs. 2011-06-10 (birthday)
+    // 12 - (birthdayMonth - currentMonth) = remainderMonth
+    // remainderMonths = 10
+    // count up months -> 7,8,9,10,11,12,1,2,3,4 -> 10 months
+    // dayjs(7).daysInMonth() = ... -> run this for each month
+    // 9 months = X number of days -> dynamic based on months in question
+    // add the extra days in because birthdayDay > currentDay?
+  } else {
+    throw new Error("Error in days calculator function.");
+  }
+}
 
 export const currentYear = dayjs().format("YYYY");
 

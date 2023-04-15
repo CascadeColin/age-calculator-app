@@ -1,7 +1,7 @@
-import { useState, ChangeEvent, FormEvent } from "react";
-import "./App.css";
+import { useState, ChangeEvent, FormEvent, KeyboardEvent } from "react";
 import { getAge, getBirthday } from "./helpers/types";
 import { isDateValid, isDateInTheFuture, calculateAge, currentYear } from "./helpers/time";
+import "./App.css";
 
 
 /* NOTE: x equivalent to dateString, rest equivalent to destructured birthday state */
@@ -19,6 +19,7 @@ export default function App() {
 
   // formats birthday to "YYYY-MM-DD" so dayjs can use it
   const dateString = `${birthday.year}-${birthday.month}-${birthday.day}`;
+  // console.log('dateString: ', dateString)
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>): void {
     const unitOfTime: string = e.target.id;
@@ -32,9 +33,8 @@ export default function App() {
 
   function handleFormSubmit(e: FormEvent<HTMLButtonElement>): void {
     // see time.ts for pseudocode
-    const test = calculateAge(dateString)
-    console.log(test)
-    const days = ''
+    const a = calculateAge(dateString)
+    setAge(a)
     /* NOTE: dates formatted as: YYYY-MM-DD */
     // format birthday and Date.now()
     // compare to get age as timestamp
@@ -46,6 +46,7 @@ export default function App() {
     //    entire form must be filled out
     //    must be valid day, month, year
     //    fields are required
+    
   }
 
   return (
