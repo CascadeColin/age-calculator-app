@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { getAge, getBirthday } from "./helpers/types";
-import { isDateValid, isDateInTheFuture, calculateAge } from "./helpers/time";
+import { calculateAge } from "./helpers/time";
+import { isDateValid, isDateInTheFuture } from "./helpers/validation";
 import "./App.css";
 
 export default function App() {
