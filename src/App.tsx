@@ -1,15 +1,30 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { getAge, getBirthday } from "./helpers/types";
 import { calculateAge } from "./helpers/time";
-import { isDateValid, isDateInTheFuture } from "./helpers/validation";
+import {
+  isDateValid,
+  isDateInTheFuture,
+  isDateComplete,
+  dayValueValidation,
+  monthValueValidation,
+  isYearValid,
+} from "./helpers/validation";
 import "./App.css";
+
+/* TODO: styling: 
+  1) View the optimal layout for the interface depending on their device's screen size
+  2) See hover and focus states for all interactive elements on the page
+*/
 
 export default function App() {
   const [birthday, setBirthday] = useState(getBirthday());
   const [age, setAge] = useState(getAge());
   const [error, setError] = useState("");
+  console.log("refresh works");
 
   // formats birthday to "YYYY-MM-DD" so dayjs can use it
+  // TODO: validate `birthday` to make sure they are defined
+  // NOTE: run through a validation function in `validation.ts`
   const dateString = `${birthday.year}-${birthday.month}-${birthday.day}`;
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>): void {
@@ -25,13 +40,10 @@ export default function App() {
   function handleFormSubmit(e: FormEvent<HTMLButtonElement>): void {
     /* View an age in years, months, and days after submitting a valid date through the form
     NOTE: Receive validation errors if:
-    Any field is empty when the form is submitted
-    The day number is not between 1-31
-    The month number is not between 1-12
-    The year is in the future
-    The date is invalid, e.g. 31/04/1991 (there are 30 days in April)
-    View the optimal layout for the interface depending on their device's screen size
-    See hover and focus states for all interactive elements on the page
+    1) Any field is empty when the form is submitted (isDateComplete)
+    2) The day number is not between 1-31 & The date is invalid (dayValueValidation)
+    3) The month number is not between 1-12 (monthValueValidation)
+    4) The year is in the future (isYearValid)
     */
 
     // see time.ts for pseudocode

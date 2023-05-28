@@ -19,9 +19,6 @@ export function calculateAge(date: string): Age {
   // where months = total number of months from inputted date to now
   const remainderMonths = (month % 12).toString();
 
-  const currentFullDate = dayjs().format("YYYY-MM-DD");
-  const birthdayFullDate = dayjs(date, "YYYY-MM-DD", true).format("YYYY-MM-DD");
-
   /* imperfect but close solution is:
     total days - (total years * 365.25) - (remainder months * 30)
     WHERE 365.25 is days in a year accounting for leap years AND
