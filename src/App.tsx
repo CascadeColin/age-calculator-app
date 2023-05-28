@@ -1,16 +1,7 @@
-import { useState, ChangeEvent, FormEvent, KeyboardEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { getAge, getBirthday } from "./helpers/types";
-import { isDateValid, isDateInTheFuture, calculateAge, currentYear } from "./helpers/time";
+import { isDateValid, isDateInTheFuture, calculateAge } from "./helpers/time";
 import "./App.css";
-
-
-/* NOTE: x equivalent to dateString, rest equivalent to destructured birthday state */
-// const year = "2007"
-// const month = "04"
-// const day = "10"
-// const x = "2007-04-10";
-
-// console.log('calculateAge: ', calculateAge(x))
 
 export default function App() {
   const [birthday, setBirthday] = useState(getBirthday());
@@ -19,7 +10,6 @@ export default function App() {
 
   // formats birthday to "YYYY-MM-DD" so dayjs can use it
   const dateString = `${birthday.year}-${birthday.month}-${birthday.day}`;
-  // console.log('dateString: ', dateString)
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>): void {
     const unitOfTime: string = e.target.id;
@@ -32,9 +22,20 @@ export default function App() {
   }
 
   function handleFormSubmit(e: FormEvent<HTMLButtonElement>): void {
+    /* View an age in years, months, and days after submitting a valid date through the form
+    NOTE: Receive validation errors if:
+    Any field is empty when the form is submitted
+    The day number is not between 1-31
+    The month number is not between 1-12
+    The year is in the future
+    The date is invalid, e.g. 31/04/1991 (there are 30 days in April)
+    View the optimal layout for the interface depending on their device's screen size
+    See hover and focus states for all interactive elements on the page
+    */
+
     // see time.ts for pseudocode
-    const a = calculateAge(dateString)
-    setAge(a)
+    const age = calculateAge(dateString);
+    setAge(age);
     /* NOTE: dates formatted as: YYYY-MM-DD */
     // format birthday and Date.now()
     // compare to get age as timestamp
@@ -46,7 +47,6 @@ export default function App() {
     //    entire form must be filled out
     //    must be valid day, month, year
     //    fields are required
-    
   }
 
   return (
