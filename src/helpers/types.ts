@@ -11,11 +11,11 @@ export type Birthday = {
 };
 
 export function getAge(): Age {
-  return {
-    years: "",
-    months: "",
-    days: "",
-  };
+    return {
+      years: "",
+      months: "",
+      days: "",
+    };
 }
 
 export function getBirthday(): Birthday {

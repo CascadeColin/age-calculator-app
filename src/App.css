@@ -73,3 +73,9 @@
 .attribution a {
   color: hsl(228, 45%, 44%);
 }
+
+.error {
+  color: red;
+  font-weight: 600;
+  margin-left: 30px;
+}
