@@ -1,6 +1,7 @@
 import { Age } from "./types";
 // makes working with dates easier
 import * as dayjs from "dayjs";
+// import dayjs from 'dayjs/esm/index.js'
 // dayjs plugins
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);

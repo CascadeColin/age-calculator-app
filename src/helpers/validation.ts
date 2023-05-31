@@ -1,5 +1,6 @@
 // makes working with dates easier
 import * as dayjs from "dayjs";
+// FIXME: dayjs is not properly importing into production
 // dayjs plugins
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
